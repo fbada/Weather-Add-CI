@@ -24,7 +24,7 @@ body {
   padding: 40px;
   border-radius: 20px;
   background-image: linear-gradient(to bottom, rgba(255, 153, 0, 0.3), rgba(3,52,157,0.6)), url("../img/bg.gif");
-  background-size: 100%;
+  background-size: 130%;
   background-position: center;
   opacity: 1;
 }
