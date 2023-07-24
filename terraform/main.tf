@@ -65,6 +65,76 @@ resource "aws_instance" "webserver" {
   }
 }
 
+resource "aws_lb" "weather_app_lb" {
+  name               = "your_load_balancer_name"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.allow_http_ssh.id]
+  subnets            = ["subnet-0962bf633da160d77"]
+
+  enable_deletion_protection = false
+}
+
+resource "aws_lb_listener" "front_end" {
+  load_balancer_arn = aws_lb.weather_app_lb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.example.arn
+  }
+}
+
+resource "aws_lb_target_group" "example" {
+  name     = "tf-example"
+  port     = 3000
+  protocol = "HTTP"
+  vpc_id   = "vpc-012e558b4d7dc12db"
+}
+
+resource "aws_cloudfront_distribution" "s3_distribution" {
+  origin {
+    domain_name = aws_lb.weather_app_lb.dns_name
+    origin_id   = "your_cloudfront_distribution_name"
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "http-only"
+      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+    }
+  }
+
+  default_cache_behavior {
+    viewer_protocol_policy = "redirect-to-https"
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD", "OPTIONS"]
+    target_origin_id       = "your_cloudfront_distribution_name"
+
+    forwarded_values {
+      query_string = false
+      headers      = ["*"]
+      cookies {
+        forward = "all"
+      }
+    }
+  }
+
+  viewer_certificate {
+    acm_certificate_arn      = "your_certificate_arn"
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1"
+  }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  is_ipv6_enabled = true
+}
+
 output "webserver-ip" {
   value = aws_instance.webserver.public_ip
 }
@@ -73,6 +143,13 @@ output "url" {
   value = "http://${aws_instance.webserver.public_ip}:3000"
 }
 
+output "load_balancer_dns_name" {
+  value = aws_lb.weather_app_lb.dns_name
+}
+
+output "cloudfront_distribution_domain_name" {
+  value = aws_cloudfront_distribution.s3_distribution.domain_name
+}
 
 terraform {
   backend "s3" {
