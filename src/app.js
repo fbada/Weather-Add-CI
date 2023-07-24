@@ -1,26 +1,26 @@
-function formatDate(timestamp) {
-  let date = new Date(timestamp);
+function formatDate(timestamp, timezoneOffsetInSeconds) {
+  if (!timestamp) return "Invalid timestamp";
+  
+  let date = new Date((timestamp + timezoneOffsetInSeconds) * 1000);
 
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ];
-  let day = days[date.getDay()];
-  return `${day} ${formatHours(timestamp)}`;
+  let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  let day = days[date.getUTCDay()];
+
+  let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  let month = months[date.getUTCMonth()];
+
+  return `${day}, ${month} ${date.getUTCDate()} ${formatHours(timestamp, timezoneOffsetInSeconds)}`;
 }
 
-function formatHours(timestamp) {
-  let date = new Date(timestamp);
-  let hours = date.getHours();
+function formatHours(timestamp, timezoneOffsetInSeconds) {
+  if (!timestamp) return "Invalid timestamp";
+  
+  let date = new Date((timestamp + timezoneOffsetInSeconds) * 1000);
+  let hours = date.getUTCHours();
   if (hours < 10) {
     hours = `0${hours}`;
   }
-  let minutes = date.getMinutes();
+  let minutes = date.getUTCMinutes();
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
@@ -42,15 +42,17 @@ function displayTemperature(response) {
 
   celsiusTemperature = response.data.main.temp;
 
+  let timezoneOffset = response.data.timezone;
+
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
-  cityElement.innerHTML = response.data.name;
+  cityElement.innerHTML = response.data.name + ", " + response.data.sys.country; // added country
   descriptionElement.innerHTML = response.data.weather[0].description;
   humidityElement.innerHTML = response.data.main.humidity;
   windElement.innerHTML = Math.round(response.data.wind.speed);
-  dateElement.innerHTML = formatDate(response.data.dt * 1000);
+  dateElement.innerHTML = formatDate(response.data.dt, timezoneOffset);
   precipitationElement.innerHTML = response.data.clouds.all;
-  sunsetElement.innerHTML = formatHours(response.data.sys.sunset * 1000);
-  sunriseElement.innerHTML = formatHours(response.data.sys.sunrise * 1000);
+  sunsetElement.innerHTML = formatHours(response.data.sys.sunset, timezoneOffset);
+  sunriseElement.innerHTML = formatHours(response.data.sys.sunrise, timezoneOffset);
 
   iconElement.setAttribute(
     "src",
@@ -66,10 +68,12 @@ function displayForecast(response) {
 
   for (let index = 0; index < 6; index++) {
     forecast = response.data.list[index];
+    let timezoneOffset = response.data.city.timezone;
+
     forecastElement.innerHTML += `
     <div class="col-2">
       <h3>
-        ${formatHours(forecast.dt * 1000)}
+        ${formatHours(forecast.dt, timezoneOffset)}
       </h3>
       <img
         src="http://openweathermap.org/img/wn/${
@@ -99,7 +103,7 @@ function handleSubmit(event) {
   event.preventDefault();
   let cityInputElement = document.querySelector("#city-input");
   search(cityInputElement.value);
-  cityInputElement.value = ""; // This line resets the search box
+  cityInputElement.value = ""; 
 }
 
 function displayFahrenheitTemperature(event) {
