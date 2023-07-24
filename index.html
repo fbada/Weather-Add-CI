@@ -10,8 +10,8 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <link rel="stylesheet" href="src/style.css" />
     <title>Weather App</title>
   </head>
@@ -21,16 +21,20 @@
         <div class="weather-app">
           <form id="search-form" class="mb-3">
             <div class="row">
-              <div class="col-9">
+              <div class="col-8">
                 <input
                   type="search"
                   placeholder="Enter a city.."
                   class="form-control custom-search"
                   id="city-input"
-                  autocomplete="on"
+                  autocomplete="off"
                 />
               </div>
-              
+              <div class="col-1">
+                <div id="location-button" style="cursor: pointer;">
+                  <i class="fas fa-location-arrow" style="font-size: 24px; padding-top: 5px;"></i>
+                </div>
+              </div>
               <div class="col-3">
                 <input
                   type="submit"
@@ -38,21 +42,16 @@
                   class="btn btn-primary w-100 custom-btn"
                 />
               </div>
-              
-            
             </div>
           </form>
           <hr>
          <div class="overview">
-    <h1 id="city"></h1>
-   
-    <ul class="info-list">
-        <li><i class="fas fa-calendar-alt"></i> <span id="date"></span></li>
-        <li><i class="fas fa-cloud"></i> <span id="description"></span></li>
-    </ul>
-</div>
-
-
+            <h1 id="city"></h1>
+            <ul class="info-list">
+              <li><i class="fas fa-calendar-alt"></i> <span id="date"></span></li>
+              <li><i class="fas fa-cloud"></i> <span id="description"></span></li>
+            </ul>
+          </div>
           <div class="row">
             <div class="col-6">
               <div class="clearfix weather-temperature">
@@ -66,28 +65,23 @@
                   </div>
               </div>
           </div>
-          
             <div class="col-6 custom-list glass-effect">
               <ul>
-                  <li>Humidity: <span id="humidity"></span>%</li>
-                  <li>Wind: <span id="wind"></span> km/h</li>
-                  <li>Precipitation: <span id="precipitation"></span>%</li>
-                  <li>Sunrise: <span id="sunrise"></span></li>
-                  <li>Sunset: <span id="sunset"></span></li>
+                <li>Humidity: <span id="humidity"></span>%</li>
+                <li>Wind: <span id="wind"></span> km/h</li>
+                <li>Precipitation: <span id="precipitation"></span>%</li>
+                <li>Sunrise: <span id="sunrise"></span></li>
+                <li>Sunset: <span id="sunset"></span></li>
               </ul>
           </div>
-            
-            
           </div>
-              <div class="row weather-forecast" id="forecast">  
+          <div class="row weather-forecast" id="forecast">  
           </div>
-        
-            </div>
-            <small id= "by">
-               
-               Ada Fetic
-            </small>
-         </div>
+        </div>
+        <small id= "by">
+          Ada Fetic
+        </small>
+      </div>
     </div>
     <script src="src/app.js"></script>
   </body>

@@ -72,7 +72,7 @@ output "webserver-ip" {
 output "url" {
   value = "http://${aws_instance.webserver.public_ip}:3000"
 }
-  
+
 
 terraform {
   backend "s3" {

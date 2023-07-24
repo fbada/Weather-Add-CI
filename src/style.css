@@ -25,7 +25,6 @@ body {
   border-radius: 20px;
   background-image: linear-gradient(to bottom, rgba(255, 153, 0, 0.3), rgba(3,52,157,0.6)), url("../img/bg.gif");
   background-size: 140%;
-
   background-position: center;
   opacity: 1;
 }
@@ -149,6 +148,28 @@ li {
 
 /* Buttons & Inputs */
 
+#location-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: #ff9800;
+  color: #fff;
+}
+
+#location-button:hover {
+  background-color: #ffbb00;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  transform: translateY(-2px); 
+}
+
+#location-button i {
+  font-size: 20px;
+}
+
+
 .custom-btn {
   background-color: #ff9800;
   color: #fff;
@@ -163,7 +184,7 @@ li {
 }
 
 .custom-btn:hover {
-  background-color: #e68900;
+  background-color: #ffbb00;
   box-shadow: 0 5px 10px rgba(0,0,0,0.2);
   transform: translateY(-2px); 
 }
