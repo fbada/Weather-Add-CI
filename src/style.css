@@ -14,7 +14,7 @@ body {
 .weather-app-wrapper {
   max-width: 700px;
   min-width: 700px;  
-  margin: 50px auto;
+  margin: 20px auto;
   border-radius: 25px; 
   background: rgba(255,255,255,0.01);
   border: 1px solid rgba(255,255,255,0.2);
