@@ -64,7 +64,7 @@ function displayForecast(response) {
   forecastElement.innerHTML = null;
   let forecast = null;
 
-  for (let index =  0; index < 6; index++) {
+  for (let index = 0; index < 6; index++) {
     forecast = response.data.list[index];
     forecastElement.innerHTML += `
     <div class="col-2">
@@ -99,6 +99,7 @@ function handleSubmit(event) {
   event.preventDefault();
   let cityInputElement = document.querySelector("#city-input");
   search(cityInputElement.value);
+  cityInputElement.value = ""; // This line resets the search box
 }
 
 function displayFahrenheitTemperature(event) {
@@ -121,9 +122,26 @@ function displayCelsiusTemperature(event) {
 function getUserLocation(event) {
   event.preventDefault();
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(getWeatherFromPosition);
+    navigator.geolocation.getCurrentPosition(getWeatherFromPosition, handleGeolocationError);
   } else {
     alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function handleGeolocationError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      alert("You need to enable location services to use this feature.");
+      break;
+    case error.POSITION_UNAVAILABLE:
+      alert("Location information is unavailable.");
+      break;
+    case error.TIMEOUT:
+      alert("The request to get user location timed out.");
+      break;
+    case error.UNKNOWN_ERROR:
+      alert("An unknown error occurred.");
+      break;
   }
 }
 

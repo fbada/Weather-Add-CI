@@ -10,7 +10,10 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="src/style.css" />
     <title>Weather App</title>
@@ -31,8 +34,11 @@
                 />
               </div>
               <div class="col-1">
-                <div id="location-button" style="cursor: pointer;">
-                  <i class="fas fa-location-arrow" style="font-size: 24px; padding-top: 5px;"></i>
+                <div id="location-button" style="cursor: pointer">
+                  <i
+                    class="fas fa-location-arrow"
+                    style="font-size: 24px; padding-top: 8px"
+                  ></i>
                 </div>
               </div>
               <div class="col-3">
@@ -44,43 +50,49 @@
               </div>
             </div>
           </form>
-          <hr>
-         <div class="overview">
-            <h1 id="city"></h1>
-            <ul class="info-list">
-              <li><i class="fas fa-calendar-alt"></i> <span id="date"></span></li>
-              <li><i class="fas fa-cloud"></i> <span id="description"></span></li>
-            </ul>
+          <hr />
+          <div class="overview">
+            <div class="city-date-description">
+              <h1 id="city"></h1>
+              <ul class="info-list">
+                <li>
+                  <i class="fas fa-calendar-alt"></i> <span id="date"></span>
+                </li>
+                <li>
+                  <i class="fas fa-cloud"></i> <span id="description"></span>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="row">
             <div class="col-6">
               <div class="clearfix weather-temperature">
-                  <img src="" alt="Clear" id="icon" class="float-left" />
-                  <div class="float-left">
-                      <strong id="temperature"></strong>
-                      <span class="units">
-                          <a href="#" id="celsius-link" class="active">°C</a> |
-                          <a href="#" id="fahrenheit-link">°F</a>
-                      </span>
-                  </div>
+                <img src="" alt="Clear" id="icon" class="float-left" />
+                <div class="float-left temperature-unit-wrapper">
+                  <strong id="temperature"></strong>
+                  <span class="units">
+                    <a href="#" id="celsius-link" class="active">°C</a> |
+                    <a href="#" id="fahrenheit-link">°F</a>
+                  </span>
+                </div>
               </div>
+            </div>
+            <div class="col-6">
+              <div class="custom-list glass-effect">
+                <ul>
+                  <li>Humidity: <span id="humidity"></span>%</li>
+                  <li>Wind: <span id="wind"></span> km/h</li>
+                  <li>Precipitation: <span id="precipitation"></span>%</li>
+                  <li>Sunrise: <span id="sunrise"></span></li>
+                  <li>Sunset: <span id="sunset"></span></li>
+                </ul>
+              </div>
+            </div>
           </div>
-            <div class="col-6 custom-list glass-effect">
-              <ul>
-                <li>Humidity: <span id="humidity"></span>%</li>
-                <li>Wind: <span id="wind"></span> km/h</li>
-                <li>Precipitation: <span id="precipitation"></span>%</li>
-                <li>Sunrise: <span id="sunrise"></span></li>
-                <li>Sunset: <span id="sunset"></span></li>
-              </ul>
-          </div>
-          </div>
-          <div class="row weather-forecast" id="forecast">  
-          </div>
+
+          <div class="row weather-forecast" id="forecast"></div>
         </div>
-        <small id= "by">
-          Ada Fetic
-        </small>
+        <small id="by"> Ada Fetic </small>
       </div>
     </div>
     <script src="src/app.js"></script>
